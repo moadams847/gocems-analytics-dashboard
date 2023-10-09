@@ -89,6 +89,7 @@ def fetch_data_for_month():
      "DataType":"R"
     }
     
+
     July_data = authenticate_and_request(APITocken, APPType, request_body)
     Sensor_Data_July = July_data['SearchDetail']
     if len(Sensor_Data_July) != 0:
@@ -105,6 +106,7 @@ def fetch_data_for_month():
 data_load_state = st.text('Loading data...')
 data = fetch_data_for_month()
 id_sensor_from_df = (data['DeviceID'][0])
+data_load_state.text('Loading data...done!')
 
 # Create a download button to download the displayed data as CSV
 st.subheader(f'{id_sensor_from_df} Data')
