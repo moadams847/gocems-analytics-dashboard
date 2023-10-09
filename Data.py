@@ -52,13 +52,14 @@ col1, col2, col3 = st.columns([2, 2, 2])
 
 # Date input widgets in the first column
 with col1:
-    start_date = st.date_input("Select Start Date", value=datetime(2023, 7, 1))
-    end_date = st.date_input("Select End Date", value=datetime(2023, 7, 31))
+    yesterday = datetime.now() - timedelta(days=1)
+    start_date = st.date_input("Select Start Date", value=yesterday)
+    end_date = st.date_input("Select End Date", value=datetime.now())
 
 # Time input widgets in the second column
 with col2:
-    start_time = st.time_input("Select Start Time", value=datetime(2023, 7, 1, 0, 0))
-    end_time = st.time_input("Select End Time", value=datetime(2023, 7, 31, 23, 59))
+    start_time = st.time_input("Select Start Time", value=yesterday.time())
+    end_time = st.time_input("Select End Time", value=datetime.now().time())
 
 # Sensor ID selection dropdown in the third column
 with col3:
