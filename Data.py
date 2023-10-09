@@ -109,10 +109,9 @@ data = fetch_data_for_month()
 id_sensor_from_df = (data['DeviceID'][0])
 
 # Create a download button to download the displayed data as CSV
-st.subheader(f'{id_sensor_from_df} Data')
+st.subheader(f'Sensor {id_sensor_from_df} Data')
 st.write(data)
 data_load_state.text('Loading data...done!')
-
 
 # Notify the reader that the data was successfully loaded.
 csv_data = data.to_csv(index=False).encode()
@@ -122,6 +121,12 @@ st.download_button(
     file_name="data_july_ENE02368.csv",
     mime="text/csv"
 )
+
+# Create a download button to download the displayed data as CSV
+st.subheader(f'Sensor {id_sensor_from_df} Summary Statistics')
+st.write(data.describe())
+data_load_state.text('Loading data...done!')
+
 
 
 

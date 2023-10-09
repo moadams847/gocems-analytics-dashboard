@@ -104,18 +104,28 @@ def fetch_data_for_month():
 # Create a time series plot using Plotly Express
 data = fetch_data_for_month()
 print(data)
-if data is not None:
-    # data_load_state = st.text('Loading graph...')
-    id_sensor_from_df = (data['DeviceID'][0])
-    custom_format_graph = "%d-%b-%Y"
-    fig = px.line(data, x='DataDate', y='PM2_5', title= f'PM2.5 line plot for sensor {id_sensor_from_df} from {start_date.strftime(custom_format_graph)} to {end_date.strftime(custom_format_graph)}')
+
+# List of columns to exclude from selection
+columns_to_exclude = ['DataDate', 'DeviceID']
+
+# Get the list of available columns (excluding those to exclude)
+available_columns = [col for col in data.columns if col not in columns_to_exclude]
+
+# Default selection
+default_selection = ['PM2_5']  # Replace with your default selection
+
+# Use the available_columns list and default_selection in the multiselect
+selected_columns = st.multiselect("Select Column or Columns for Comparison", available_columns, default=default_selection)
+
+if data is not None and selected_columns:
+    sensor_id = data['DeviceID'][0]
+    # Create a Plotly Express line chart with selected columns
+    fig = px.line(data, x='DataDate', y=selected_columns, title=f'Line Plot for sensor {sensor_id}')
     fig.update_xaxes(title_text='Date and Time')
-    fig.update_yaxes(title_text='PM2.5 Concentration')
+    fig.update_yaxes(title_text='Concentration')
+
     # Display the time series plot in Streamlit
     st.plotly_chart(fig)
-    # data_load_state.text("Done!")
 else:
-    st.subheader('Please choose a date range starting from July 2023 and upwards')
-
-
+    st.subheader('Select column or columns for plotting and specify a suitable date range')
 

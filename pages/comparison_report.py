@@ -100,10 +100,8 @@ data_current_sensor = fetch_data_for_month(sensor_id)
 
 # Fetch data for the selected sensor to compare (if selected)
 data_to_compare_sensor = None
-if selected_sensor_to_compare != "None":
+if selected_sensor_to_compare != "None" and selected_sensor_to_compare != sensor_id:
     data_to_compare_sensor = fetch_data_for_month(selected_sensor_to_compare)
-
-
 
 if data_to_compare_sensor is not None and data_current_sensor is not None:
     # Data is not None, it may be a DataFrame
@@ -148,14 +146,12 @@ if data_to_compare_sensor is not None and data_current_sensor is not None:
         print("DataFrame is empty")
         
 else:
-    # Data is None, perform actions for the None case
-    print("Data is None")
+    # Data is None or the same sensor is selected, perform actions for the None case
+    if selected_sensor_to_compare == sensor_id:
+        st.subheader('Please choose a different sensor to compare')
+    else:
+        st.subheader('Choose the sensors you wish to compare')
 
 
-# if data_to_compare_sensor != "None":
-#     print(data_to_compare_sensor)
 
-# elif data_to_compare_sensor == "None":
-#     print(data_to_compare_sensor)
 
-# Create a time series plot using Plotly
