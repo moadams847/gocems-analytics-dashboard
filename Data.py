@@ -107,11 +107,12 @@ def fetch_data_for_month():
 data_load_state = st.text('Loading data...')
 data = fetch_data_for_month()
 id_sensor_from_df = (data['DeviceID'][0])
-data_load_state.text('Loading data...done!')
 
 # Create a download button to download the displayed data as CSV
 st.subheader(f'{id_sensor_from_df} Data')
 st.write(data)
+data_load_state.text('Loading data...done!')
+
 
 # Notify the reader that the data was successfully loaded.
 csv_data = data.to_csv(index=False).encode()
