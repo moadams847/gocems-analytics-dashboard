@@ -8,7 +8,7 @@ import time
 from datetime import datetime, timedelta
 import json
 
-st.title('GOCEMS Air Quality Dashboard')
+# st.title('GOCEMS Air Quality Dashboard')
 
 def authenticate_and_request(APITocken, APPType, request_body):
     # API endpoint URL (replace with the actual API endpoint)

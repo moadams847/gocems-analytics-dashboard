@@ -8,7 +8,7 @@ import time
 from datetime import datetime, timedelta
 import json
 
-st.title('GOCEMS Air Quality Dashboard')
+# st.title('GOCEMS Air Quality Dashboard')
 
 def authenticate_and_request(APITocken, APPType, request_body):
     # API endpoint URL (replace with the actual API endpoint)
@@ -99,34 +99,6 @@ def fetch_data_for_month():
         print(df_july_two.head())
         return df_july_two
 
-
-
-# Create a text element and let the reader know the data is loading.
-# data_load_state = st.text('Loading data...')
-
-# Load 10,000 rows of data into the dataframe.
-# data = fetch_data_for_month()
-# id_sensor_from_df = (data['DeviceID'][0])
-
-# Create a download button to download the displayed data as CSV
-# st.subheader('Raw data')
-# st.write(data)
-
-# Notify the reader that the data was successfully loaded.
-
-# csv_data = data.to_csv(index=False).encode()
-# st.download_button(
-#     label="Download Data as CSV",
-#     data=csv_data,
-#     file_name="data_july_ENE02368.csv",
-#     mime="text/csv"
-# )
-
-
-# Streamlit app title
-# st.subheader('Time Series Plot with PM2.5')
-# with st.spinner('Wait for it...'):
-#     time.sleep(1)
 
 # Create a time series plot using Plotly Express
 data = fetch_data_for_month()
