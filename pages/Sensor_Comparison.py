@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import json
 
 # st.title('GOCEMS Air Quality Dashboard')
@@ -44,14 +44,13 @@ col1, col2, col3 = st.columns([2, 2, 2])
 
 # Date input widgets in the first column
 with col1:
-    yesterday = datetime.now() - timedelta(days=1)
-    start_date = st.date_input("Select Start Date", value=yesterday)
-    end_date = st.date_input("Select End Date", value=datetime.now())
+    start_date = st.date_input("Select Start Date", datetime(2023, 10, 1))  # Set to July 1, 2023
+    end_date = st.date_input("Select End Date", datetime.now() + timedelta(days=1))  # Add one day to current date
 
 # Time input widgets in the second column
 with col2:
-    start_time = st.time_input("Select Start Time", value=yesterday.time())
-    end_time = st.time_input("Select End Time", value=datetime.now().time())
+    start_time = st.time_input("Select Start Time", time(0, 0))  # Set to midnight (00:00)
+    end_time = st.time_input("Select End Time", datetime.now().time())
 
 # Sensor ID selection dropdown in the third column
 with col3:
@@ -130,13 +129,27 @@ if data_to_compare_sensor is not None and data_current_sensor is not None:
         print(merged_df.head(1))
         # st.write(merged_df.head(1))
 
-        
         # Plot the merged data
         custom_format_graph = "%d-%b-%Y"
-        fig = px.line(merged_df, x=f'{prefix_one}_DataDate', y=[f'{prefix_one}_PM2_5', f'{prefix_two}_PM2_5'], title=f'PM2.5 line plot for sensors {prefix_one} and {prefix_two} from {start_date.strftime(custom_format_graph)} to {end_date.strftime(custom_format_graph)}')
+
+        # data columns
+        columns = merged_df.columns
+
+        # Exclude columns containing 'DeviceID' or 'DataDate'
+        filtered_columns = [col for col in columns if not ('DeviceID' in col or 'DataDate' in col)]
+
+        print(filtered_columns)
+
+        item_one = [item for item in filtered_columns if item.startswith(prefix_one)]
+        sensor_one = st.selectbox(f"Select {prefix_one} Column", item_one)
+        
+        item_two = [item for item in filtered_columns if item.startswith(prefix_two)]
+        sensor_two = st.selectbox(f"Select {prefix_two} Column", item_two)
+
+        fig = px.line(merged_df, x=f'{prefix_one}_DataDate', y=[sensor_one, sensor_two], title=f'{sensor_one} and {sensor_two} comparison plot for sensors {prefix_one} and {prefix_two} from {start_date.strftime(custom_format_graph)} to {end_date.strftime(custom_format_graph)}')
 
         fig.update_xaxes(title_text='Date and Time')
-        fig.update_yaxes(title_text='PM2.5 Concentration')
+        fig.update_yaxes(title_text='Concentration')
 
         # Display the combined time series plot in Streamlit
         st.plotly_chart(fig)

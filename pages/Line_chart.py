@@ -55,14 +55,15 @@ with col1:
     start_date = st.date_input("Select Start Date", datetime(2023, 10, 1))  # Set to July 1, 2023
     end_date = st.date_input("Select End Date", datetime.now() + timedelta(days=1))  # Add one day to current date
 
+
 # Time input widgets in the second column
 with col2:
     start_time = st.time_input("Select Start Time", time(0, 0))  # Set to midnight (00:00)
     end_time = st.time_input("Select End Time", datetime.now().time())
-
+    
 # Sensor ID selection dropdown in the third column
 with col3:
-    sensor_id = st.selectbox("Select Sensor ID", ["ENE00960", "ENE00933", "ENE00950","ENE02516"])  # Add more sensor IDs as needed
+    sensor_id = st.selectbox("Select Sensor ID", ["ENE00960", "ENE00933", "ENE00950"])  # Add more sensor IDs as needed
 
 # Combine the selected date and time into datetime objects using np.array
 start_datetime = np.array(datetime.combine(start_date, start_time))
@@ -86,10 +87,9 @@ def fetch_data_for_month():
      "FromDate":start_date_str,
      "ToDate":end_date_str,
      "DataInteval":1,
-     "DataType":"P"
+     "DataType":"R"
     }
     
-
     July_data = authenticate_and_request(APITocken, APPType, request_body)
     Sensor_Data_July = July_data['SearchDetail']
     if len(Sensor_Data_July) != 0:
@@ -101,44 +101,32 @@ def fetch_data_for_month():
         return df_july_two
 
 
-
-# Create a text element and let the reader know the data is loading.
-data_load_state = st.text('Loading data...')
+# Create a time series plot using Plotly Express
 data = fetch_data_for_month()
+print(data)
 
-if data is not None:
-    id_sensor_from_df = data['DeviceID'][0]
+# List of columns to exclude from selection
+columns_to_exclude = ['DataDate', 'DeviceID']
 
-        # Create a download button to download the displayed data as CSV
-    st.subheader(f'Sensor {id_sensor_from_df} Data')
-    st.write(data)
-    # st.dataframe(data.style.highlight_max(axis=0))
-    
-    # Notify the reader that the data was successfully loaded.
-    csv_data = data.to_csv(index=False).encode()
-    if st.download_button(
-        label="Download Data as CSV",
-        data=csv_data,
-        file_name="data_july_ENE02368.csv",
-        mime="text/csv"
-    ):
-        st.success("Download completed successfully!")
+# Get the list of available columns (excluding those to exclude)
+available_columns = [col for col in data.columns if col not in columns_to_exclude]
 
-    # Create a download button to download the displayed data as CSV
-    st.subheader(f'Sensor {id_sensor_from_df} Summary Statistics')
-    st.write(data.describe())
-    data_load_state.text('Loading data...done!')
+# Default selection
+default_selection = ['PM2_5']  # Replace with your default selection
 
+# Use the available_columns list and default_selection in the multiselect
+selected_columns = st.multiselect("Select Column or Columns for Comparison", available_columns, default=default_selection)
+
+
+if data is not None and selected_columns:
+    sensor_id = data['DeviceID'][0]
+    # Create a Plotly Express line chart with selected columns
+    fig = px.line(data, x='DataDate', y=selected_columns, title=f'Line Plot for sensor {sensor_id}')
+    fig.update_xaxes(title_text='Date and Time')
+    fig.update_yaxes(title_text='Concentration')
+
+    # Display the time series plot in Streamlit
+    st.plotly_chart(fig)
 else:
-    st.write('Specify a suitable date range')
-    # Handle the case where data is None
-    # id_sensor_from_df = None  # Or perform other appropriate actions
-
-
-
-
-
-
-
-
+    st.subheader('Select column or columns for plotting and specify a suitable date range')
 
