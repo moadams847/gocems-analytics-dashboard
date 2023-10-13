@@ -175,6 +175,7 @@ if data is not None:
     data_load_state.text('Loading data...done!')
 
 
+
     # hourly evolution----------------------------------------------------
    
     # Extract the day of the week and hour
@@ -183,6 +184,15 @@ if data is not None:
     cleaned_data['DayOfWeek'] = cleaned_data.iloc[:, 0].index.to_series().dt.day_name()
     cleaned_data['Hour'] = cleaned_data.iloc[:, 0].index.to_series().dt.hour
     print(cleaned_data)
+
+    # Create a new list excluding 'Hour' and 'DayOfWeek'
+
+    column_list =cleaned_data.columns
+
+    new_column_list = [item for item in column_list if item not in ('Hour', 'DayOfWeek')]
+
+    selected_column = st.selectbox(f"Select a Column", new_column_list)
+    print(selected_column)
 
     sns.set_style('darkgrid')
 
@@ -195,8 +205,8 @@ if data is not None:
     for i, day in enumerate(days):
         day_resampled_df = cleaned_data[cleaned_data['DayOfWeek'] == day]
         ax = axes[i]
-        
-        sns.lineplot(data=cleaned_data, x='Hour', y='PM2_5', label='PM2.5', ax=ax, color = 'violet', ci = None)
+
+        sns.lineplot(data=cleaned_data, x='Hour', y=selected_column, label=f'{selected_column}', ax=ax, errorbar=None)
     #     sns.lineplot(data=day_resampled_df, x='Hour', y='PM10', marker='o', label='PM10', ax=ax)
 
         ax.set_title(f'{day}')
@@ -205,17 +215,17 @@ if data is not None:
         ax.legend()  # Add a legend to the subplot
         
     # Set a single title for the entire plot
-    fig.suptitle('Hourly evolution of PM_2.5 during the week')
+    fig.suptitle(f'Hourly evolution of {id_sensor_from_df}_{selected_column} during the week')
 
     # Adjust horizontal gap between subplots
     plt.subplots_adjust(wspace=0.05)  # You can adjust the value as needed
 
-    fig = plt.savefig('Hourly evolution of PM_2.5 during the week.png', dpi=150)  # You can replace the file name as needed
+    fig = plt.savefig(f'Hourly evolution of {id_sensor_from_df}_{selected_column} during the week.png', dpi=150)  # You can replace the file name as needed
 
-    st.subheader(f'Hourly evolution of PM_2.5 during the week')
+    st.subheader(f'Hourly evolution of {selected_column} during the week')
     
    # Display the saved image
-    image = Image.open("Hourly evolution of PM_2.5 during the week.png")
+    image = Image.open(f"Hourly evolution of {id_sensor_from_df}_{selected_column} during the week.png")
 
     # Convert the image to a supported format (e.g., PNG)
     image_bytes = io.BytesIO()
@@ -223,12 +233,14 @@ if data is not None:
     image_data = image_bytes.getvalue()
 
     # Create a download button for the image
-    st.download_button("Download graph", image_data, "hourly_evolution.png", key="download_image")
-
-    st.image(image)
+    st.download_button("Download graph", image_data, f"Hourly evolution of {id_sensor_from_df}_{selected_column} during the week.png", key="download_image")
+    
+    show_element = st.checkbox("Show Hourly Evolution")
+    if show_element:
+        st.image(image)
 
     # You can adjust spacing between subplots by adding markdown text or other Streamlit elements
-    st.markdown("## ")
+    st.markdown("##")
 
 
 else:

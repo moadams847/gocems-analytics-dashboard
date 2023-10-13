@@ -3,6 +3,7 @@ attrs==23.1.0
 blinker==1.6.2
 cachetools==5.3.1
 certifi==2023.7.22
+cffi==1.16.0
 charset-normalizer==3.3.0
 click==8.1.7
 colorama==0.4.6
@@ -30,6 +31,7 @@ Pillow==10.0.1
 plotly==5.17.0
 protobuf==4.24.4
 pyarrow==13.0.0
+pycparser==2.21
 pydeck==0.8.1b0
 Pygments==2.16.1
 pyparsing==3.1.1
@@ -39,12 +41,14 @@ referencing==0.30.2
 requests==2.31.0
 rich==13.6.0
 rpds-py==0.10.4
+rpy2==3.5.1
 scikit-learn==1.3.1
 scipy==1.11.3
 seaborn==0.13.0
 six==1.16.0
 smmap==5.0.1
 streamlit==1.27.2
+streamlit-plotly-mapboxEvents==0.0.4
 tenacity==8.2.3
 threadpoolctl==3.2.0
 toml==0.10.2

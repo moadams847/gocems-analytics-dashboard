@@ -110,29 +110,33 @@ if data is not None:
     id_sensor_from_df = data['DeviceID'][0]
 
         # Create a download button to download the displayed data as CSV
-    st.subheader(f'Sensor {id_sensor_from_df} Data')
-    st.write(data)
-    # st.dataframe(data.style.highlight_max(axis=0))
-    
-    # Notify the reader that the data was successfully loaded.
-    csv_data = data.to_csv(index=False).encode()
-    if st.download_button(
-        label="Download Data as CSV",
-        data=csv_data,
-        file_name="data_july_ENE02368.csv",
-        mime="text/csv"
-    ):
-        st.success("Download completed successfully!")
+    st.subheader(f'Sensor {id_sensor_from_df} Data and Summary Statistics')
+    show_element = st.checkbox("Show Data and Summary Statistics")
+    if show_element:
+        st.write(data)
+        # st.dataframe(data.style.highlight_max(axis=0))
+        
+        # Notify the reader that the data was successfully loaded.
+        csv_data = data.to_csv(index=False).encode()
+        if st.download_button(
+            label="Download Data as CSV",
+            data=csv_data,
+            file_name="data_july_ENE02368.csv",
+            mime="text/csv"
+        ):
+            st.success("Download completed successfully!")
 
-    # Create a download button to download the displayed data as CSV
-    st.subheader(f'Sensor {id_sensor_from_df} Summary Statistics')
-    st.write(data.describe())
-    data_load_state.text('Loading data...done!')
+        # Create a download button to download the displayed data as CSV
+        st.subheader(f'Sensor {id_sensor_from_df} Summary Statistics')
+        st.write(data.describe())
+        data_load_state.text('Loading data...done!')
 
 else:
     st.write('Specify a suitable date range')
     # Handle the case where data is None
     # id_sensor_from_df = None  # Or perform other appropriate actions
+data_load_state.text('Loading data...done!')
+
 
 
 

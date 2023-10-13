@@ -80,7 +80,7 @@ def fetch_data_for_month(sensor_id):
      "FromDate":start_date_str,
      "ToDate":end_date_str,
      "DataInteval":1,
-     "DataType":"R"
+     "DataType":"P"
     }
     
     July_data = authenticate_and_request(APITocken, APPType, request_body)
@@ -152,7 +152,9 @@ if data_to_compare_sensor is not None and data_current_sensor is not None:
         fig.update_yaxes(title_text='Concentration')
 
         # Display the combined time series plot in Streamlit
-        st.plotly_chart(fig)
+        show_element = st.checkbox("Show Hourly Evolution Graph")
+        if show_element:
+            st.plotly_chart(fig)
 
     else:
         # DataFrame is empty, perform actions for the empty case
