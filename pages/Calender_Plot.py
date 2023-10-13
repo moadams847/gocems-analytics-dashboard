@@ -8,7 +8,6 @@ print(path)
 # Check for R installation
 try:
     # Set R working directory
-    robjects.r('par(family = "sans")')
     robjects.r('setwd(path)')
 
     # Load R libraries
@@ -34,8 +33,8 @@ try:
     image = Image.open('image_two.png')
     st.image(image, caption='Calplot')
 
-except robjects.rinterface.RRuntimeError as e:
-    st.error(f"An R error occurred: {str(e)}")
+# except robjects.rinterface.RRuntimeError as e:
+#     st.error(f"An R error occurred: {str(e)}")
 
 except Exception as e:
     st.error(f"An error occurred: {str(e)}")
