@@ -2,13 +2,13 @@ import streamlit as st
 from PIL import Image
 import rpy2.robjects as robjects
 import os
-path = os.path.dirname(__file__)
-print(path)
+# path = os.path.dirname(__file__)
+# print(path)
 
 # Check for R installation
 try:
     # Set R working directory
-    robjects.r('setwd(path)')
+    # robjects.r('setwd(path)')
 
     # Load R libraries
     robjects.r('library(ggplot2)')
