@@ -241,13 +241,11 @@ if data is not None:
 
     # Delete the PNG file if the action is successful
     path = os.path.dirname(__file__)
-    print(path)
+    # print(path)
     if os.path.exists(f"{path}\Hourly evolution of {id_sensor_from_df}_{selected_column} during the week.png"):
         os.remove(f"{path}\Hourly evolution of {id_sensor_from_df}_{selected_column} during the week.png")
         print("File deleted.")
     
-
-
     # You can adjust spacing between subplots by adding markdown text or other Streamlit elements
     st.markdown("##")
 
