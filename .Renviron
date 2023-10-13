@@ -1,3 +1,2 @@
 R_LIBS_USER=/usr/local/lib/R/site-library
 R_LIBS=/usr/local/lib/R/site-library
-R_DEFAULT_PACKAGES=utils,ExpDes
