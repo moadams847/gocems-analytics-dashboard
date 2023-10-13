@@ -1,12 +1,15 @@
 import streamlit as st
 from PIL import Image
 import rpy2.robjects as robjects
+import os
+path = os.path.dirname(__file__)
+print(path)
 
 # Check for R installation
 try:
     # Set R working directory
     robjects.r('par(family = "sans")')
-    robjects.r('setwd("C:/Users/dell latitude 7400/Desktop/work/gocems_dashboard/pages")')
+    robjects.r('setwd(path)')
 
     # Load R libraries
     robjects.r('library(ggplot2)')
