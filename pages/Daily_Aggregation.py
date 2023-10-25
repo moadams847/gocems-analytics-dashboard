@@ -69,6 +69,7 @@ start_datetime = np.array(datetime.combine(start_date, start_time))
 end_datetime = np.array(datetime.combine(end_date, end_time))
 print(start_datetime)
 print(end_datetime)
+
 # Define a custom datetime format-----------------------------------------------------------
 custom_format = "%d-%b-%Y %I:%M %p"
 

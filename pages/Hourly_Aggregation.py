@@ -249,7 +249,6 @@ if data is not None:
     # You can adjust spacing between subplots by adding markdown text or other Streamlit elements
     st.markdown("##")
 
-
 else:
     st.write('Specify a suitable date range')
     # Handle the case where data is None
