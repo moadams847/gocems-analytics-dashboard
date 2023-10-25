@@ -63,7 +63,7 @@ with col2:
     
 # Sensor ID selection dropdown in the third column
 with col3:
-    sensor_id = st.selectbox("Select Sensor ID", ["ENE00960", "ENE00933", "ENE00950"])  # Add more sensor IDs as needed
+    sensor_id = st.selectbox("Select Sensor ID", ["ENE00960", "ENE00933", "ENE00950", "ENE02368","ENE02369", "ENE00967", "ENE02516"])  # Add more sensor IDs as needed
 
 # Combine the selected date and time into datetime objects using np.array
 start_datetime = np.array(datetime.combine(start_date, start_time))
