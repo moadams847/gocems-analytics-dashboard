@@ -121,7 +121,7 @@ if data is not None:
         if st.download_button(
             label="Download Data as CSV",
             data=csv_data,
-            file_name="data_july_ENE02368.csv",
+            file_name=f"data_july_{id_sensor_from_df}.csv",
             mime="text/csv"
         ):
             st.success("Download completed successfully!")
