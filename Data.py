@@ -63,6 +63,8 @@ with col2:
 # Sensor ID selection dropdown in the third column
 with col3:
     sensor_id = st.selectbox("Select Sensor ID", ["ENE00960", "ENE00933", "ENE00950","ENE02516"])  # Add more sensor IDs as needed
+    processced_or_raw = st.selectbox("Type of Data", ["P", "R"]) 
+
 
 # Combine the selected date and time into datetime objects using np.array
 start_datetime = np.array(datetime.combine(start_date, start_time))
@@ -86,7 +88,7 @@ def fetch_data_for_month():
      "FromDate":start_date_str,
      "ToDate":end_date_str,
      "DataInteval":1,
-     "DataType":"R"
+     "DataType":processced_or_raw
     }
     
 
