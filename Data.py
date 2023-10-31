@@ -86,7 +86,7 @@ def fetch_data_for_month():
      "FromDate":start_date_str,
      "ToDate":end_date_str,
      "DataInteval":1,
-     "DataType":"P"
+     "DataType":"R"
     }
     
 
