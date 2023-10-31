@@ -58,7 +58,7 @@ with col1:
 # Time input widgets in the second column
 with col2:
     start_time = st.time_input("Select Start Time", time(0, 0))  # Set to midnight (00:00)
-    end_time = st.time_input("Select End Time", datetime.now().time())
+    end_time = st.time_input("Select End Time", time(23, 59))
 
 # Sensor ID selection dropdown in the third column
 with col3:
