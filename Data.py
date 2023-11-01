@@ -123,7 +123,7 @@ if data is not None:
         if st.download_button(
             label="Download Data as CSV",
             data=csv_data,
-            file_name=f"data_{id_sensor_from_df}.csv",
+            file_name=f"data_{id_sensor_from_df}_{processced_or_raw}.csv",
             mime="text/csv"
         ):
             st.success("Download completed successfully!")
